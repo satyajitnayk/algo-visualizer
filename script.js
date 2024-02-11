@@ -59,7 +59,7 @@ function animate(moves) {
       }
 
       // staggered delay allows you to see the visualization happening one after the other rather than all at once
-    }, 1 * index);
+    }, 200 * index);
     timeoutIds.push(timeoutId);
   }
 }
