@@ -2,12 +2,16 @@
   display: flex;
   align-items: flex-end;
   height: 300px;
+  flex-wrap: wrap; /* Allow bars to wrap on small screens */
+  justify-content: center; /* Center bars when they wrap */
 }
 
 body {
   display: flex;
   align-items: center;
   flex-direction: column;
+  margin: 0; /* Remove default margin */
+  padding: 10px; /* Add some padding */
 }
 
 .bar {
@@ -64,4 +68,43 @@ button {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   text-align: center;
   line-height: 1.6;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .bar {
+    width: 10px; /* Make bars thinner on smaller screens */
+  }
+
+  button {
+    width: 80px; /* Adjust button size */
+    height: 30px;
+    font-size: medium;
+  }
+
+  #algo-description {
+    font-size: 16px; /* Adjust font size for readability */
+    padding: 15px;
+    margin: 10px auto;
+  }
+
+  .color-legend {
+    position: static; /* Move legend below on small screens */
+    margin-top: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  h1,
+  h2 {
+    font-size: 20px; /* Smaller headers on very small screens */
+  }
+
+  #container {
+    height: 200px; /* Adjust container height */
+  }
+
+  .color-legend {
+    padding: 5px;
+  }
 }
