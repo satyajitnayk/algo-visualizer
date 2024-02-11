@@ -10,19 +10,28 @@
 
 <body>
   <h1>Sorting Visulizer</h1>
+  <h2>Select an Algorithm: <select id="algorithms"></select></h2><br><br>
+
   <div id="container"></div>
 
+  <div id="colorLegend" class="color-legend"></div>
+
   <hr>
-  <blockquote style="color: cornflowerblue;font-size: x-large;">"It is called Bubble sort because the largest item
+  <blockquote id="algo-description">"It is called Bubble sort because
+    the largest item
     'bubbles up' to the
     right during the sorting process."
   </blockquote>
   <hr>
   <div>
     <button onclick="play()">play</button>
+    <button onclick="resetAnimation()">reset</button>
   </div>
 
+  <script src="constants.js"></script>
+  <script src="initialize.js"></script>
   <script src="script.js"></script>
+  <script src="sorting-algos.js"></script>
 </body>
 
 </html>

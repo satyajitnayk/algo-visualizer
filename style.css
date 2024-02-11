@@ -24,3 +24,44 @@ button {
   color: black;
   font-size: x-large;
 }
+
+.color-legend {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background-color: #f9f9f9;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.color-legend h3 {
+  margin-top: 0;
+}
+
+.legend-item {
+  margin-bottom: 5px;
+}
+
+.legend-circle {
+  display: inline-block;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  margin-right: 5px;
+}
+
+#algo-description {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 18px;
+  color: #444;
+  background-color: #f4f4f4;
+  border-radius: 8px;
+  padding: 20px;
+  margin: 20px auto;
+  max-width: 600px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  line-height: 1.6;
+}

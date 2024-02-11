@@ -1,75 +1,67 @@
-const n = 20;
-const arr = [];
-const container = document.getElementById('container');
+const algorithmSelect = document.getElementById('algorithms');
+let timeoutIds = []; // Declare an array to store timeout IDs
 
-init();
-
-function init() {
-  for (let i = 0; i < n; ++i) {
-    arr[i] = Math.random();
+/**
+ *
+ * @param {Array} arr
+ * @param {String} algoName
+ * @returns moves array
+ */
+function getMovesForAlgo(array, algoName) {
+  if (algoName === SORTING_ALGOS.BUBBLE_SORT) {
+    return bubbleSort(array);
+  } else if (algoName === SORTING_ALGOS.INSERTION_SORT) {
+    return insertionSort(array);
   }
-  showBars();
+}
+
+function getSelectedAlgorithm() {
+  const selectElement = document.getElementById('algorithms');
+  const selectedValue = selectElement.value;
+  return selectedValue;
 }
 
 function play() {
-  // Storing copy of arr to keep original array intact.
+  // reset if animation already playing
+  resetAnimation();
+  // set selected algorithm
+  const selectedAlgorithm = getSelectedAlgorithm();
+  // sending copy of arr to keep original array intact.
   // After applying bubble sort array will be sorted & when we
   // apply moves on sorted array it doesnot work.
-  const arrcopy = [...arr];
-  const moves = bubbleSort(arrcopy);
+  const moves = getMovesForAlgo(arr.slice(), selectedAlgorithm);
+
   animate(moves);
 }
 
 function animate(moves) {
-  if (moves.length == 0) {
-    // to remove swap apirs color after sorting done
-    showBars();
-    return;
-  }
-  const move = moves.shift();
-  const [i, j] = move.indices;
-  if (move.type === 'swap') {
-    [arr[i], arr[j]] = [arr[j], arr[i]];
-  }
-
-  showBars(move);
-  setTimeout(() => {
-    animate(moves);
-  }, 200);
-}
-
-function bubbleSort(arr = []) {
-  const moves = [];
-  do {
-    var swapped = false;
-
-    for (let i = 1; i < arr.length; ++i) {
-      moves.push({ indices: [i - 1, i], type: 'compare' });
-      if (arr[i - 1] > arr[i]) {
-        swapped = true;
-        // store moves
-        moves.push({ indices: [i - 1, i], type: 'swap' });
-        // swap
-        [arr[i - 1], arr[i]] = [arr[i], arr[i - 1]];
+  for (const [index, move] of moves.entries()) {
+    const timeoutId = setTimeout(function () {
+      const [i, j] = move.indices;
+      if (move.type === OPERATION_TYPES.SWAP) {
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+        // console.log(`${newarr} after swapping ${i} ->${j}`);
+      } else if (move.type === OPERATION_TYPES.SHIFT) {
+        arr[i] = arr[j];
+        // console.log(`${newarr} internal shift ${i} ->${j}`);
+      } else if (move.type === OPERATION_TYPES.MOVE_TO_CORRECT_POSITION) {
+        arr[i] = move.value;
       }
-    }
-  } while (swapped);
-  return moves;
-}
 
-function showBars(move) {
-  container.innerHTML = '';
-  for (let i = 0; i < n; ++i) {
-    const bar = document.createElement('div');
-    bar.style.height = arr[i] * 100 + '%';
-    bar.classList.add('bar');
-
-    // changing color of bar to show swapping pairs
-    if (move && move.indices.includes(i)) {
-      // mark bar color according to operation type
-      // for compare "blue" & for swap "red"
-      bar.style.backgroundColor = move.type === 'swap' ? 'red' : 'blue';
-    }
-    container.appendChild(bar);
+      showBars(move);
+      // staggered delay allows you to see the visualization happening one after the other rather than all at once
+    }, 200 * index);
+    timeoutIds.push(timeoutId);
   }
 }
+
+// Set up event listener for the change event on the select list
+algorithmSelect.addEventListener('change', function () {
+  // reinitialize new bars
+  initializeNewBars();
+  // Get the selected algorithm
+  const selectedAlgorithm = algorithmSelect.value;
+  // Set the description based on the selected algorithm
+  document.getElementById('algo-description').innerText =
+    ALGO_DESCRIPTIONS[selectedAlgorithm];
+});
