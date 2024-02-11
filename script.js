@@ -49,8 +49,17 @@ function animate(moves) {
       }
 
       showBars(move);
+
+      // Reset bar colors at the end of the animation
+      if (index === moves.length - 1) {
+        const bars = document.querySelectorAll('.bar');
+        bars.forEach((bar) => {
+          bar.style.backgroundColor = 'black';
+        });
+      }
+
       // staggered delay allows you to see the visualization happening one after the other rather than all at once
-    }, 200 * index);
+    }, 1 * index);
     timeoutIds.push(timeoutId);
   }
 }
